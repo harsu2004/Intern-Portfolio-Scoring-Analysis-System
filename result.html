@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation Results - Graphura</title>
+    <style>
+        :root {
+            --dark-bg: #0b0f17;
+            --card-bg: #131926;
+            --neon-green: #00df89;
+            --btn-blue: #3b82f6;
+            --text-white: #ffffff;
+            --text-muted: #94a3b8;
+            --border-light: rgba(255, 255, 255, 0.07);
+        }
+        body { background-color: var(--dark-bg); color: #f3f4f6; font-family: -apple-system, sans-serif; margin: 0; padding: 40px 20px; }
+        .dashboard { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 340px 1fr; gap: 24px; align-items: start; }
+        .card { background-color: var(--card-bg); border: 1px solid var(--border-light); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+        .candidate-name { font-size: 1.4rem; font-weight: bold; color: #fff; margin-bottom: 4px; }
+        .target-role { color: #60a5fa; font-size: 0.9rem; margin-bottom: 20px; }
+        .percentage-text { font-size: 2rem; font-weight: bold; color: var(--neon-green); margin: 20px 0; }
+        .fit-badge { background: #1e293b; color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; margin-bottom: 20px; }
+        .suggestion-header-title { font-weight: bold; margin-bottom: 10px; color: var(--text-white); }
+        .panel-sug-list { padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; }
+        .repo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .repo-card { background-color: #0b0f19; border: 1px solid var(--border-light); border-radius: 8px; padding: 16px; }
+        .repo-name { font-weight: bold; color: #60a5fa; }
+    </style>
+</head>
+<body>
+
+    <div class="card" style="max-width: 1150px; margin: 0 auto 24px auto;">
+    <h3 style="margin-top: 0; color: #60a5fa; margin-bottom: 15px;">👤 Candidate Profile Summary</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; color: var(--text-muted); font-size: 0.95rem;">
+        <div>
+            <p><strong>User Name:</strong> {{ r.get('name', 'N/A') }}</p>
+            <p><strong>Email:</strong> {{ r.get('email', 'N/A') }}</p>
+            <p><strong>Phone:</strong> {{ r.get('phone', 'N/A') }}</p>
+        </div>
+        <div>
+            <p><strong>Education:</strong> {{ r.get('education', 'N/A') }}</p>
+            
+            <p><strong>LinkedIn:</strong> 
+                {% if r.get('linkedin') and r.get('linkedin') != 'N/A' %}
+                    <a href="{{ r.get('linkedin') }}" target="_blank" style="color: var(--neon-green);">View Profile</a>
+                {% else %}
+                    N/A
+                {% endif %}
+            </p>
+
+            <p><strong>GitHub:</strong> 
+              {% if r.get('github_url') and r.get('github_url') != 'N/A' %}
+              <a href="{{ r.get('github_url') }}" target="_blank" style="color: var(--neon-green);">
+              View GitHub
+              </a>
+              {% else %}
+              N/A
+              {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+    {{ info_box | safe }}
+    
+    <div class="dashboard">
+        <div class="card left-panel">
+            <div class="candidate-name">{{ r.name }}</div>
+            <div class="target-role">Data Analytics Intern</div>
+            
+            <div class="percentage-text">{{ r.score }}%</div>
+            
+            <div style="
+                background:#0f172a;
+                padding:12px;
+                border-radius:10px;
+                margin-bottom:15px;
+                border:1px solid rgba(255,255,255,0.08);
+               ">
+            </div>
+      </div>
+
+    </div>
+
+<div class="fit-badge">{{ r.fit }}</div>
+            
+<div class="panel-suggestions-box">
+    <div class="suggestion-header-title">Suggestions :</div>
+        <ul class="panel-sug-list">
+            {% for sug in r.sug %}
+                <li>{{ sug }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 24px;">
+        {% if r.has_git and r.repos %}
+    <div class="card">
+<div class="section-title" style="margin-bottom:15px; font-weight:bold;">📂 Live GitHub Repositories</div>
+    <div class="repo-grid">
+        {% for repo in r.repos %}
+            <div class="repo-card">
+            <div class="repo-name">📁 {{ repo.name }}</div>
+            <div class="repo-meta" style="font-size: 0.8rem; color:#6b7280; margin-top:5px;">
+              ⭐ {{ repo.stars }} | 🍴 {{ repo.forks }} | {{ repo.lang }}
+            </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+     {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

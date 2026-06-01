@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intern Portfolio Readiness Scorer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg: #0b0f17;
+            --card-bg: #131926;
+            --neon-green: #00df89;
+            --text-white: #ffffff;
+            --text-muted: #94a3b8;
+            --tag-match-bg: rgba(16, 185, 129, 0.1);
+            --tag-match-border: rgba(16, 185, 129, 0.2);
+            --tag-missing-bg: rgba(239, 68, 68, 0.1);
+            --tag-missing-border: rgba(239, 68, 68, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--dark-bg); color: var(--text-white); padding-bottom: 80px; overflow-x: hidden; }
+
+       
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: rgba(11, 15, 23, 0.8); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--neon-green); }
+        .nav-links { display: flex; gap: 20px; align-items: center; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
+        .nav-links a:hover { color: var(--text-white); }
+        .btn-nav { background: var(--neon-green); color: #000 !important; padding: 10px 20px; border-radius: 30px; font-weight: 600; cursor: pointer; border: none; text-decoration: none; display: inline-block; transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,223,137,0.3); color: #000 !important; }
+        
+         
+        .section-wrapper { width: 100%; padding: 60px 8%; display: flex; flex-direction: column; align-items: center; }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+    @media (max-width: 768px) {
+   
+    /* 1. NAVBAR MOBILE RULES */
+    
+    nav {
+        flex-direction: column !important;
+        gap: 15px !important;
+        padding: 20px 10px !important;
+        text-align: center !important;
+    }
+
+    .nav-links {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        padding: 0 !important;
+    }
+
+    .nav-links li {
+        display: inline-block !important;
+        margin: 4px 0 !important;
+    }
+
+    .nav-links a, .btn-nav {
+        font-size: 0.85rem !important; 
+        padding: 6px 12px !important;
+    }
+
+   
+    /* 2. HERO LAYOUT MOBILE RULES */
+   
+    .hero-layout {
+        flex-direction: column !important;
+        gap: 30px !important;
+        text-align: center !important;
+        margin-bottom: 20px !important;
+    }
+
+    .hero-left {
+        width: 100% !important;
+    }
+
+    .hero-left h1 {
+        font-size: 2.2rem !important; 
+        line-height: 1.2 !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .hero-left h1 br {
+        display: none !important;
+    }
+
+    .hero-left p {
+        font-size: 0.95rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 20px !important;
+        padding: 0 10px !important;
+    }
+
+    .hero-right {
+        width: 280px !important;
+        height: 280px !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
+
+    
+    /* 3. THREE QUICK STEPS MOBILE RULES */
+   
+    .steps-container {
+        margin-top: 30px !important;
+    }
+
+    .steps-container h2 {
+        font-size: 1.8rem !important; 
+        margin-bottom: 25px !important;
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr !important; 
+        gap: 20px !important;
+        padding: 0 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    .step-card {
+        padding: 30px 20px !important;
+        text-align: center !important; 
+        width: 100% !important;
+        max-width: 350px !important; 
+        margin: 0 auto !important; 
+    }
+
+    .step-num {
+        top: 15px !important;
+        right: 20px !important;
+        font-size: 2.2rem !important;
+    }
+
+      
+    .features-container h2 {
+        font-size: 1.8rem !important; 
+        margin-bottom: 30px !important;
+        text-align: center !important;
+    }
+
+    .features-grid {
+        display: flex !important;             
+        flex-direction: column !important;
+        gap: 20px !important;
+        width: 100% !important;
+        padding: 0 5px !important;
+        box-sizing: border-box !important;
+    }
+
+    .feature-card {
+        width: 100% !important;
+        max-width: 350px !important;
+        margin: 0 auto !important; 
+        padding: 25px 20px !important;
+        text-align: center !important;         
+        box-sizing: border-box !important;
+    }
+
+    .feature-card i {
+        font-size: 1.8rem !important;
+        margin-bottom: 12px !important;
+    }
+
+    .feature-card h3 {
+        font-size: 1.2rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    .feature-card p {
+        font-size: 0.9rem !important;
+        line-height: 1.5 !important;
+    }
+
+    /* 5. DUMMY SHOWCASE (ABOUT SECTION) MOBILE RULES */
+  
+    .dummy-showcase-box {
+        padding: 25px 15px !important; 
+        margin-top: 30px !important;
+    }
+
+    .dummy-title-header {
+        font-size: 1.25rem !important; 
+        margin-bottom: 20px !important;
+    }
+
+    .main-layout-grid {
+        display: flex !important;
+        flex-direction: column !important;    
+        gap: 20px !important;
+        width: 100% !important;
+    }
+
+    .left-score-card {
+        width: 100% !important;
+        max-width: 340px !important;
+        margin: 0 auto !important; 
+        padding: 20px !important;
+        box-sizing: border-box !important;
+        text-align: center !important;
+    }
+
+    .right-data-column {
+        width: 100% !important;
+        max-width: 340px !important;
+        margin: 0 auto !important; 
+        box-sizing: border-box !important;
+    }
+
+    .card-bg {
+        padding: 15px !important; 
+    }
+
+    .metric-row {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+
+       
+        .hero-layout { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 50px; margin-bottom: 40px; }
+        .hero-left { flex: 1; }
+        .hero-left .tagline { color: var(--neon-green); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; }
+        .hero-left h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 25px; }
+        .hero-left p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
+        .hero-right { position: relative; width: 320px; height: 320px; background: var(--card-bg); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.03); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hero-right:hover { box-shadow: 0 10px 30px rgba(0, 223, 137, 0.1); }
+
+        
+        .steps-container { width: 100%; text-align: center; margin-top: 40px; }
+        .steps-container h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 40px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; width: 100%; }
+        
+        .step-card { 
+            background: var(--card-bg); 
+            border-radius: 16px; 
+            padding: 35px 25px; 
+            text-align: left; 
+            border: 1px solid rgba(255,255,255,0.02); 
+            position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.15s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .step-card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 223, 137, 0.2);
+        }
+        
+        .step-num { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; font-weight: 900; color: rgba(255,255,255,0.03); transform: translateZ(20px); }
+        .step-card i { font-size: 1.5rem; margin-bottom: 20px; transform: translateZ(25px); display: inline-block; }
+        .step-card h3 { font-size: 1.2rem; margin-bottom: 12px; font-weight: 600; transform: translateZ(15px); }
+        .step-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; transform: translateZ(10px); }
+
+       
+        .features-container { width: 100%; text-align: center; margin-bottom: 50px; }
+        .features-container h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 40px; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; width: 100%; }
+        
+        .feature-card { 
+            background: var(--card-bg); 
+            border-radius: 16px; 
+            padding: 30px; 
+            text-align: left; 
+            border: 1px solid rgba(255,255,255,0.02);
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.15s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .feature-card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 223, 137, 0.15);
+        }
+        
+        .feature-card i { font-size: 1.3rem; margin-bottom: 15px; transform: translateZ(25px); display: inline-block; }
+        .feature-card h3 { font-size: 1.1rem; margin-bottom: 10px; font-weight: 600; transform: translateZ(15px); }
+        .feature-card p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; transform: translateZ(10px); }
+
+       
+        .dummy-showcase-box { width: 100%; margin-top: 50px; background: rgba(19, 25, 38, 0.6); border-radius: 20px; padding: 40px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .dummy-title-header { text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 30px; color: var(--neon-green); letter-spacing: 0.5px; }
+
+       
+        .app-engine-box { width: 100%; max-width: 700px; background: var(--card-bg); border-radius: 24px; padding: 40px; border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 20px 40px rgba(0,0,0,0.3); transition: border-color 0.4s ease; }
+        .engine-header { text-align: center; margin-bottom: 35px; }
+        .engine-header h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+        .engine-header p { color: var(--text-muted); font-size: 0.9rem; }
+        
+        .mode-toggle-tabs { display: flex; background: rgba(0,0,0,0.2); padding: 6px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.02); }
+        .tab-btn { flex: 1; background: none; border: none; color: var(--text-muted); padding: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border-radius: 8px; transition: 0.2s; }
+        .tab-btn.active { background: #1e293b; color: var(--text-white); border: 1px solid rgba(255,255,255,0.05); }
+
+        .input-group { margin-bottom: 22px; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+        .input-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        select, input[type="text"] { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.08); padding: 14px; border-radius: 10px; color: #FFF; font-size: 0.95rem; outline: none; transition: 0.2s; }
+        select:focus, input[type="text"]:focus { border-color: var(--neon-green); }
+
+        .file-upload-dropzone { width: 100%; border: 2px dashed rgba(255,255,255,0.1); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: 0.2s; background: rgba(0,0,0,0.1); }
+        .file-upload-dropzone:hover { border-color: var(--neon-green); background: rgba(0,223,137,0.02); }
+        .file-upload-dropzone i { font-size: 2rem; color: var(--text-muted); margin-bottom: 12px; }
+        .file-upload-dropzone p { font-size: 0.9rem; color: var(--text-muted); }
+        .file-name-label { margin-top: 8px; font-size: 0.85rem; color: var(--neon-green); font-weight: 600; display: none; }
+
+        .btn-submit-engine { width: 100%; background: var(--neon-green); color: #000; border: none; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.2s; }
+        .btn-submit-engine:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,223,137,0.2); }
+
+       
+        .radial-progress-wrapper { position: relative; width: 140px; height: 140px; }
+        .radial-svg { width: 140px; height: 140px; transform: rotate(-90deg); }
+        .circle-bg { fill: none; stroke: rgba(255,255,255,0.03); stroke-width: 10; }
+        .circle-fill {fill: none;stroke: var(--neon-green);stroke-width: 10;stroke-linecap: round;stroke-dasharray: 377;stroke-dashoffset: 377;transition: stroke-dashoffset 1.5s ease;}
+        .circle-text-center { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .circle-text-center .num { font-size: 1.8rem; font-weight: 800; color: #0f6b66; }
+
+        /* --- OUTPUT ENGINE CLASSES --- */
+        .main-layout-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 30px; width: 100%; text-align: left; margin-top: 20px; }
+        .left-score-card { background: var(--card-bg); border-radius: 20px; padding: 35px; border: 1px solid rgba(255,255,255,0.03); display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .profile-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; margin-top: 0px; color: #fff; }
+        .role-subtitle { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 25px; }
+        .center-circle-box { margin-bottom: 25px; }
+        .circle-text-center .num { font-size: 1.8rem; font-weight: 800; color: #fff; }
+
+        .circle-fill {fill: none;stroke: var(--neon-green);stroke-width: 10;stroke-linecap: round;stroke-dasharray: 377;stroke-dashoffset: 377;transition: stroke-dashoffset 1.5s ease;}
+        .badge-fit { background: rgba(0, 223, 137, 0.05); border: 1px solid rgba(0, 223, 137, 0.2); color: var(--neon-green); padding: 6px 16px; border-radius: 30px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; }
+        
+        .suggestions-box { width: 100%; text-align: left; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 25px; }
+        .suggestions-header { font-size: 0.9rem; font-weight: 700; margin-bottom: 15px; color: #fff; }
+        .suggestions-list { padding-left: 18px; color: var(--text-muted); font-size: 0.85rem; display: flex; flex-direction: column; gap: 12px; }
+        .suggestions-list li { line-height: 1.5; }
+
+        .right-data-column { display: flex; flex-direction: column; gap: 20px; }
+        .card-bg { background: var(--card-bg); border-radius: 20px; border: 1px solid rgba(255,255,255,0.03); }
+        .section-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        
+        .metrics-list { display: flex; flex-direction: column; gap: 20px; }
+        .metric-row { display: flex; flex-direction: column; gap: 8px; }
+        .metric-info { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+        .metric-info span:last-child { color: #fff; }
+        .bar-container { width: 100%; height: 6px; background: rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden; }
+        .bar-fill-track { height: 100%; width: 0%; border-radius: 10px; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        .matrix-label-sub { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px; }
+        .matrix-flex { display: flex; flex-wrap: wrap; gap: 8px; }
+        .matrix-tag { padding: 5px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+        .tag-match { background: var(--tag-match-bg); border: 1px solid var(--tag-match-border); color: #34d399; }
+        .tag-missing { background: var(--tag-missing-bg); border: 1px solid var(--tag-missing-border); color: #f87171; }
+
+        /* GitHub Section Styles */
+        .github-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .github-card { background: rgba(0,0,0,0.15); border-radius: 12px; padding: 18px; border: 1px solid rgba(255,255,255,0.02); display: flex; flex-direction: column; justify-content: space-between; }
+        .repo-name { font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .repo-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; }
+        .repo-lang-box { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+        .repo-lang-dot { width: 8px; height: 8px; background-color: var(--neon-green); border-radius: 50%; }
+
+        /* Comparison Styling */
+        .verdict-banner-container { width: 100%; padding: 30px; text-align: left; margin-bottom: 25px; border-left: 4px solid var(--neon-green); }
+        .verdict-badge { font-size: 0.75rem; font-weight: 800; color: var(--neon-green); letter-spacing: 1px; margin-bottom: 6px; }
+        .verdict-main-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
+        .verdict-reason-para { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+        .comparison-grid-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; width: 100%; }
+        .comparison-column-box { display: flex; flex-direction: column; gap: 15px; }
+        .comp-header-title { font-size: 1.1rem; font-weight: 700; color: #3b82f6; text-align: left; margin-left: 5px; }
+
+        #global-loading-overlay { display: none; margin-top: 25px; font-size: 0.95rem; color: var(--neon-green); font-weight: 600; }
+        .spinner-matrix { animation: rotation 1s linear infinite; margin-right: 8px; }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Intern<span>Portfolio</span>Scorer</div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="scrollToSection(event, '.steps-container')">How It Works</a></li>
+            <li><a href="#" onclick="scrollToSection(event, '.features-container')">Features</a></li>
+           <li><a href="#" onclick="scrollToSection(event, '#about-section')">About</a></li>
+            <li><button class="btn-nav" onclick="triggerNavbarAction('single')">Check my readiness</button></li>
+            <li><button class="btn-nav" style="background: #3b82f6; color: #fff !important;" onclick="triggerNavbarAction('compare')">Compare Resume</button></li>
+        
+            <li>
+                <a href="javascript:void(0);" id="view-history-btn" class="btn-nav" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background: #a855f7; color: #ffffff !important; padding: 10px 24px; border-radius: 50px; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease;" onmouseover="this.style.background='#9333ea'; this.style.boxShadow='0 0 12px rgba(168, 85, 247, 0.4)';" onmouseout="this.style.background='#a855f7'; this.style.boxShadow='none';">
+                 <svg style="width:14px; height:14px; fill:currentColor;" viewBox="0 0 24 24">
+                   <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                 </svg>
+                  View History
+                </a>
+            </li>
+           
+        </ul>
+    </nav>
+
+    <div class="section-wrapper" style="background: linear-gradient(180deg, rgba(99,102,241,0.03) 0%, rgba(0,0,0,0) 100%);">
+        <div class="hero-layout reveal-on-scroll">
+            <div class="hero-left">
+                <div class="tagline">Made for interns & new grads</div>
+                <h1>How internship-<br>ready is your profile?</h1>
+                <p>Drop your resume. We score how clear, complete, and role-aligned it looks — then highlight what to tighten before your next application.</p>
+            </div>
+            <div class="hero-right">
+                <span style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; text-transform: uppercase;">Readiness Gauge</span>
+                <div class="radial-progress-wrapper">
+                    <svg class="radial-svg">
+                        <circle class="circle-bg" cx="70" cy="70" r="60"></circle>
+                        <circle class="circle-fill dynamic-ring-trigger" data-offset="100" cx="70" cy="70" r="60" style="stroke-dasharray: 377; stroke-dashoffset: 377; stroke: #346dc8;"></circle>
+                    </svg>
+                <div class="circle-text-center">
+                        <div class="num">73%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="steps-container reveal-on-scroll">
+            <h2>Three quick steps</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">01</div>
+                    <i class="fa-solid fa-cloud-arrow-up" style="color: #3b82f6;"></i>
+                    <h3>Upload your resume</h3>
+                    <p>PDF or export is fine — takes under a minute to complete processing loop.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">02</div>
+                    <i class="fa-solid fa-brain" style="color: #ec4899;"></i>
+                    <h3>We score the basics</h3>
+                    <p>We check structure, clarity, skills/projects, and how well your wording matches intern job posts.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">03</div>
+                    <i class="fa-solid fa-circle-check" style="color: var(--neon-green);"></i>
+                    <h3>Get a focused to-do list</h3>
+                    <p>Short notes on what to rewrite, add, or reorder so your next draft is stronger.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-wrapper" style="border-top: 1px solid rgba(255,255,255,0.02); background: rgba(255,255,255,0.01);">
+        <div class="features-container reveal-on-scroll">
+            <h2>What we look at</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fa-regular fa-file-lines" style="color: #a855f7;"></i>
+                    <h3>Overall resume quality</h3>
+                    <p>Formatting, bullet strength, and whether your experience reads like outcomes.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-bullseye" style="color: #f43f5e;"></i>
+                    <h3>Easy to skim</h3>
+                    <p>How quickly a recruiter can find the important matching target sections.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-code-branch" style="color: #3b82f6;"></i>
+                    <h3>Skills & projects</h3>
+                    <p>Whether your skills and project lines match intern role expectations.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-link" style="color: #eab308;"></i>
+                    <h3>Online profile consistency</h3>
+                    <p>Quick checks for tracking gaps between your portfolio resume and LinkedIn elements.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-magnifying-glass" style="color: #06b6d4;"></i>
+                    <h3>Role-relevant wording</h3>
+                    <p>Missing or weak phrases common in intern job description structures.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-industry" style="color: var(--neon-green);"></i>
+                    <h3>Fit for your direction</h3>
+                    <p>How well your profile matches your target technical internship track.</p>
+                </div>
+            </div>
+        </div>
+
+     
+        <div id="about-section" class="dummy-showcase-box reveal-on-scroll" style="scroll-margin-top: 100px;">
+            <div class="dummy-title-header">Example: what you'll see back</div>
+               <div class="main-layout-grid" style="margin-top: 0;">
+                  <div class="left-score-card">
+                     <div class="profile-title">Mihir Ravat M.C.A</div>
+                       <div class="role-subtitle">Data Analytics Intern</div>
+                         <div class="center-circle-box">
+                            <div class="radial-progress-wrapper">
+                               <svg class="radial-svg">
+                                 <circle class="circle-bg" cx="70" cy="70" r="60"></circle>
+                                 <circle class="circle-fill dynamic-ring-trigger" data-offset="140" cx="70" cy="70" r="60" style="stroke-dasharray: 377; stroke-dashoffset: 377; stroke: #eab308;"></circle>
+                               </svg>
+                          <div class="circle-text-center"><div class="num" style="color: #fff;">63%</div></div>
+                       </div>
+                   </div>
+                   <span class="badge-fit" style="color:#eab308; border-color:rgba(234,179,8,0.2);">MODERATE MATCH</span>
+                </div>
+           <div class="right-data-column">
+            <div class="card-bg" style="padding:22px;">
+                <div class="metrics-list">
+                    <div class="metric-row">
+                        <div class="metric-info"><span>Resume Quality</span><span>44%</span></div>
+                        <div class="bar-container"><div class="bar-fill-track dynamic-bar-trigger" data-width="44%" style="background-color:#10b981;"></div></div>
+                    </div>
+                    <div class="metric-row">
+                        <div class="metric-info"><span>ATS Score</span><span>55%</span></div>
+                        <div class="bar-container"><div class="bar-fill-track dynamic-bar-trigger" data-width="55%" style="background-color:#f59e0b;"></div></div>
+                    </div>
+                    <div class="metric-row">
+                        <div class="metric-info"><span>Skills Match</span><span>38%</span></div>
+                        <div class="bar-container"><div class="bar-fill-track dynamic-bar-trigger" data-width="38%" style="background-color:#3b82f6;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+       
+    <div style="width: 100%; max-width: 1100px; margin: 60px auto; padding: 0 20px; box-sizing: border-box; clear: both;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+        
+        <div style="flex: 1; min-width: 250px; background: #0f172a; border: 1px solid #1e293b; padding: 30px 20px; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                <span class="stat-number" data-target="300" style="font-size: 3rem; font-weight: 800; color: #10b981; font-family: sans-serif; line-height: 1;">0</span>
+                <span style="font-size: 2.5rem; font-weight: 800; color: #10b981; line-height: 1;">+</span>
+            </div>
+            <p style="color: #94a3b8; font-size: 1rem; margin: 12px 0 0 0; font-weight: 500; letter-spacing: 0.5px;">Profiles Analyzed</p>
+        </div>
+
+        <div style="flex: 1; min-width: 250px; background: #0f172a; border: 1px solid #1e293b; padding: 30px 20px; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                <span class="stat-number" data-target="89" style="font-size: 3rem; font-weight: 800; color: #10b981; font-family: sans-serif; line-height: 1;">0</span>
+                <span style="font-size: 2.5rem; font-weight: 800; color: #10b981; line-height: 1;">%</span>
+            </div>
+            <p style="color: #94a3b8; font-size: 1rem; margin: 12px 0 0 0; font-weight: 500; letter-spacing: 0.5px;">Improved ATS Score</p>
+        </div>
+
+        <div style="flex: 1; min-width: 250px; background: #0f172a; border: 1px solid #1e293b; padding: 30px 20px; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
+                <span class="stat-number" data-target="3" style="font-size: 3rem; font-weight: 800; color: #10b981; font-family: sans-serif; line-height: 1;">0</span>
+                <span style="font-size: 1.8rem; font-weight: 700; color: #10b981; line-height: 1.4;"></span>
+            </div>
+            <p style="color: #94a3b8; font-size: 1rem; margin: 12px 0 0 0; font-weight: 500; letter-spacing: 0.5px;">Average Analysis Time</p>
+        </div>
+
+    </div>
+</div>
+
+
+
+    <div class="section-wrapper" id="cta-engine-section" style="border-top: 1px solid rgba(255,255,255,0.02);">
+        <div class="app-engine-box reveal-on-scroll">
+            <div class="engine-header">
+                <h2 id="engine-display-title">Analyze Profile Readiness</h2>
+                <p>Upload documentation to index skill matrices against industry frameworks</p>
+            </div>
+
+            <div class="mode-toggle-tabs">
+                <button type="button" class="tab-btn active" id="tab-single" onclick="switchMode('single')">Single Resume Scan</button>
+                <button type="button" class="tab-btn" id="tab-compare" onclick="switchMode('compare')">Compare 2 Resumes</button>
+            </div>
+
+            <form id="matrix-evaluation-form" enctype="multipart/form-data">
+                <input type="hidden" name="mode" id="form-mode" value="single">
+                
+                <div class="input-group">
+                    <label>Target Internship Track</label>
+                    <select name="target_track">
+                        <option value="Data Analytics Intern">Data Analytics Intern</option>
+                        <option value="Web Development Intern">Web Development Intern</option>
+                        <option value="Cybersecurity Intern">Graphic Design Intern</option>
+                        <option value="Blockchain Developer Intern">Backend Developer Intern</option>
+                        <option value="DevOps Intern">UI/UX Design Intern</option>
+                        <option value="DevOps Intern">Frontend Development Intern</option>
+                       
+
+                    </select>
+                </div>
+
+                <div class="input-grid-files" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 22px;">
+                    <div class="input-group" id="container-resume1">
+                        <label id="label-resume1">Attach Resume Profile</label>
+                        <div class="file-upload-dropzone" onclick="document.getElementById('file-field-1').click()">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <p>Click to browse or drop document here</p>
+                            <div class="file-name-label" id="lbl-f1">No file chosen</div>
+                        </div>
+                        <input type="file" id="file-field-1" name="resume1" style="display: none;" onchange="updateFileLabel(1)">
+                    </div>
+
+                    <div class="input-group" id="container-resume2" style="display: none;">
+                        <label>Attach Resume Profile Beta (Resume 2)</label>
+                        <div class="file-upload-dropzone" onclick="document.getElementById('file-field-2').click()">
+                            <i class="fa-solid fa-file-pdf" style="color: #00df89;"></i>
+                            <p>Click to browse or drop second document</p>
+                            <div class="file-name-label" id="lbl-f2">No file chosen</div>
+                        </div>
+                        <input type="file" id="file-field-2" name="resume2" style="display: none;" onchange="updateFileLabel(2)">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Live GitHub Username (Optional)</label>
+                    <input type="text" name="github_user1" placeholder="e.g. torvalds">
+                </div>
+
+                <button type="submit" class="btn-submit-engine" id="engine-submit-button">
+                    Get my readiness snapshot &rarr;
+                </button>
+            </form>
+
+            <div id="global-loading-overlay">
+                <i class="fa-solid fa-circle-notch spinner-matrix"></i> Parsing metadata vectors...
+            </div>
+        </div>
+
+        <div id="async-response-injector" style="width: 100%; max-width: 1100px;"></div>
+    </div>
+
+    
+       
+    <div style="max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-flow: row wrap; gap: 20px;">
+        <div class="logo" style="font-size: 1.3rem; font-weight: bold; color: #fff; min-width: 200px;">
+            Intern<span style="color: #10b981;">Portfolio</span>Scorer
+        </div>
+        <div style="display: inline-block;">
+            <a href="#" onclick="scrollToTop(event)" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #111827; border: 1px solid #1e293b; color: #94a3b8; padding: 8px 18px; border-radius: 30px; font-size: 0.85rem; font-weight: 500; transition: all 0.3s ease; white-space: nowrap;" onmouseover="this.style.background='#1e293b'; this.style.color='#fff'; this.style.borderColor='#3b82f6';" onmouseout="this.style.background='#111827'; this.style.color='#94a3b8'; this.style.borderColor='#1e293b';">
+                Back to Top 
+                <svg style="width:12px; height:12px; fill:currentColor;" viewBox="0 0 24 24">
+                    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div style="max-width: 1100px; margin: 20px auto 0 auto; padding-top: 15px; border-top: 1px solid #111827; text-align: center; color: #475569; font-size: 0.8rem; box-sizing: border-box;">
+        &copy; 
+    </div>
+</footer>
+
+    <script>
+        function triggerNavbarAction(mode) {
+            switchMode(mode);
+            document.getElementById('cta-engine-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            const engineBox = document.querySelector('.app-engine-box');
+            engineBox.style.borderColor = mode === 'compare' ? '#3b82f6' : 'var(--neon-green)';
+            setTimeout(() => {
+                engineBox.style.borderColor = 'rgba(255,255,255,0.04)';
+            }, 1500);
+        }
+
+        function scrollToSection(event, selector) {
+            event.preventDefault();
+            document.querySelector(selector).scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function switchMode(mode) {
+            document.getElementById('form-mode').value = mode;
+            const title = document.getElementById('engine-display-title');
+            const submitBtn = document.getElementById('engine-submit-button');
+
+            if(mode === 'single') {
+                document.getElementById('tab-single').classList.add('active');
+                document.getElementById('tab-compare').classList.remove('active');
+                document.getElementById('container-resume2').style.display = 'none';
+                document.getElementById('label-resume1').innerText = "Attach Resume Profile";
+                title.textContent = "Analyze Profile Readiness";
+                submitBtn.innerHTML = "Get my readiness snapshot &rarr;";
+                submitBtn.style.background = "var(--neon-green)";
+            } else {
+                document.getElementById('tab-single').classList.remove('active');
+                document.getElementById('tab-compare').classList.add('active');
+                document.getElementById('container-resume2').style.display = 'flex';
+                document.getElementById('label-resume1').innerText = "Attach Resume Profile Alpha (Resume 1)";
+                title.textContent = "Compare Two Profiles Side-By-Side";
+                submitBtn.innerHTML = "Execute Comparison Engine &rarr;";
+                submitBtn.style.background = "#3b82f6";
+            }
+        }
+
+        function updateFileLabel(id) {
+            const input = document.getElementById('file-field-' + id);
+            const label = document.getElementById('lbl-f' + id);
+            if(input.files.length > 0) {
+                label.innerText = input.files[0].name;
+                label.style.display = 'block';
+            }
+        }
+
+        /* 3D Mouse Movement Interactions */
+        const interactiveCards = document.querySelectorAll('.step-card, .feature-card');
+        interactiveCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                
+                const angleX = (yc - y) / 10;
+                const angleY = (x - xc) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-5px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+            });
+        });
+
+       
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                   
+                    entry.target.querySelectorAll('.dynamic-ring-trigger').forEach(ring => {
+                        const targetOffset = ring.getAttribute('data-offset');
+                        ring.style.strokeDashoffset = targetOffset;
+                    });
+                    
+                    entry.target.querySelectorAll('.dynamic-bar-trigger').forEach(bar => {
+                        const targetWidth = bar.getAttribute('data-width');
+                        bar.style.width = targetWidth;
+                    });
+                }
+            });
+        }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+            scrollObserver.observe(el);
+        });
+        
+        document.querySelectorAll('.dynamic-ring-trigger').forEach(ring => {
+
+           const score = parseInt(ring.getAttribute('data-score'));
+
+           const radius = 60;
+           const circumference = 2 * Math.PI * radius;
+
+           ring.style.strokeDasharray = circumference;
+
+           const offset = circumference - ((score / 100) * circumference);
+
+           ring.style.strokeDashoffset = offset;
+        });
+        
+       
+        document.getElementById('matrix-evaluation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            document.getElementById('global-loading-overlay').style.display = 'block';
+            document.getElementById('async-response-injector').innerHTML = '';
+
+            fetch('/analyze', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('global-loading-overlay').style.display = 'none';
+                document.getElementById('async-response-injector').innerHTML = html;
+                
+                document.getElementById('report-anchor-target').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                setTimeout(() => {
+                    document.querySelectorAll('#async-response-injector .dynamic-ring-trigger').forEach(ring => {
+                     const score = parseInt(ring.getAttribute('data-score'));    
+                     const radius = 60;
+                     const circumference = 2 * Math.PI * radius;
+                     const offset = circumference - (score / 100) * circumference;
+                     ring.style.strokeDasharray = circumference;
+                     ring.style.strokeDashoffset = offset;
+                });
+                    
+                    document.querySelectorAll('#async-response-injector .dynamic-bar-trigger').forEach(bar => {
+                        const targetWidth = bar.getAttribute('data-width');
+                        bar.style.width = targetWidth;
+                    });
+                }, 150);
+            })
+            .catch(err => {
+                document.getElementById('global-loading-overlay').style.display = 'none';
+                alert('Vector extraction processing crash logs triggered.');
+            });
+        });
+
+       
+        const historyBtn = document.getElementById('view-history-btn');
+        if (historyBtn) {
+            historyBtn.addEventListener('click', function(e) {
+                e.preventDefault(); 
+                document.getElementById('global-loading-overlay').style.display = 'block';
+                document.getElementById('async-response-injector').innerHTML = '';
+
+                fetch('/history')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('global-loading-overlay').style.display = 'none';
+                    document.getElementById('async-response-injector').innerHTML = html;
+                    
+                    const targetSection = document.getElementById('report-anchor-target') || document.getElementById('async-response-injector');
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                })
+                .catch(err => {
+                    document.getElementById('global-loading-overlay').style.display = 'none';
+                    alert('Failed to establish sequence with server history logs.');
+                });
+            });
+        }
+
+       
+        document.addEventListener("DOMContentLoaded", () => {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            const startCounting = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 1200; 
+                        const stepTime = Math.max(Math.floor(duration / target), 20);
+                        let current = 0;
+
+                        const timer = setInterval(() => {
+                            current += Math.ceil(target / (duration / stepTime));
+                            if (current >= target) {
+                                counter.innerText = target;
+                                clearInterval(timer);
+                            } else {
+                                counter.innerText = current;
+                            }
+                        }, stepTime);
+
+                        observer.unobserve(counter);
+                    }
+                });
+            };
+
+            const counterObserver = new IntersectionObserver(startCounting, {
+                threshold: 0.2
+            });
+
+            counters.forEach(counter => counterObserver.observe(counter));
+        });
+
+        
+    </script>
+</body>
+</html>

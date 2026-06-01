@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dual Competency Analysis Matrix</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: system-ui, sans-serif; background: #0b0f19; color: white; padding: 40px 20px; margin: 0; }
+        .wrapper { max-width: 1100px; margin: 0 auto; }
+        .split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .box-card { background: #111827; border-radius: 14px; padding: 25px; border: 1px solid #1f2937; }
+        .header-box { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1f2937; padding-bottom: 15px; margin-bottom: 20px; }
+        .badge { font-size: 22px; font-weight: bold; color: #38bdf8; background: #0b0f19; padding: 6px 14px; border-radius: 8px; border: 1px solid #334155; }
+        .row-item { margin-bottom: 18px; }
+        .bar-outer { background: #1f2937; height: 12px; border-radius: 6px; width: 100%; margin-top: 6px; overflow: hidden; }
+        .bar-inner { height: 100%; }
+        .pill-badge { background: #0b0f19; border: 1px solid #374151; padding: 6px 12px; border-radius: 6px; display: inline-block; margin: 4px; font-size: 13px; color: #10b981; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h2 style="text-align:center; color:#38bdf8; margin:0;">Matrix Cross-Analysis Evaluation</h2>
+        <p style="text-align:center; color:#9ca3af; margin:5px 0 30px 0;">Target Track Parameter: <strong>{{ target_role }}</strong></p>
+        
+        <div class="split">
+            <div class="box-card">
+                <div class="header-box">
+                    <div><h3 style="margin:0; font-size:18px;">{{ r1.candidate_name }}</h3><span style="color:#9ca3af; font-size:13px;">{{ n1 }}</span></div>
+                    <div class="badge">{{ r1.best_score }}%</div>
+                </div>
+                <div class="row-item">
+                    <div>Skill Match Matrix: <strong>{{ r1.skill_match }}%</strong></div>
+                    <div class="bar-outer"><div class="bar-inner" style="width: {{ r1.skill_match }}%; background: #3b82f6;"></div></div>
+                </div>
+                <div class="row-item">
+                    <div>Resume Quality Index: <strong>{{ r1.quality }}%</strong></div>
+                    <div class="bar-outer"><div class="bar-inner" style="width: {{ r1.quality }}%; background: #10b981;"></div></div>
+                </div>
+                <div class="row-item">
+                    <div>Profile Completeness: <strong>{{ r1.completeness }}%</strong></div>
+                    <div class="bar-outer"><div class="bar-inner" style="width: {{ r1.completeness }}%; background: #8b5cf6;"></div></div>
+                </div>
+                <div class="row-item">
+                    <div>ATS Optimization Structural Alignment: <strong>{{ r1.ats_score }}%</strong></div>
+                    <div class="bar-outer"><div class="bar-inner" style="width: {{ r1.ats_score }}%; background: #f59e0b;"></div></div>
+                </div>
+                <h4 style="margin:25px 0 10px 0; font-size:14px; color:#9ca3af;">Identified Vectors</h4>
+                <div>
+                    {% for i in r1.skills_matched %}<span class="pill-badge">✓ {{ i }}</span>{% endfor %}
+                </div>
+            </div>
+
+            <div class="box-card">
+                <div class="header-box">
+                    <div><h3 style="margin:0; font-size:18px;">{{ r2.candidate_name }}</h3><span style="color:#9ca3af; font-size:13px;">{{ n2 }}</span></div>
+                    <div class="badge">{{ r2.best_score }}%</div>
+                </div>
+                <div class="row-item">
+                    <div>Skill Match Matrix: <strong>{{ r2.skill_match }}%</strong></div>
+                    <div class="bar-outer"><div class="bar-inner" style="width: {{ r2.skill_match }}%; background: #3b82f6;"></div></div>
+                </div>
+                <div class="row-item">
+                    <div>Resume Quality Index: <strong>{{ r2.quality }}%</strong></div>
+                    <div class="bar-outer"><div class="bar-inner" style="width: {{ r2.quality }}%; background: #10b981;"></div></div>
+                </div>
+                <div class="row-item">
+                    <div>Profile Completeness: <strong>{{ r2.completeness }}%</strong></div>
+                    <div class="bar-outer"><div class="bar-inner" style="width: {{ r2.completeness }}%; background: #8b5cf6;"></div></div>
+                </div>
+                <div class="row-item">
+                    <div>ATS Optimization Structural Alignment: <strong>{{ r2.ats_score }}%</strong></div>
+                    <div class="bar-outer"><div class="bar-inner" style="width: {{ r2.ats_score }}%; background: #f59e0b;"></div></div>
+                </div>
+                <h4 style="margin:25px 0 10px 0; font-size:14px; color:#9ca3af;">Identified Vectors</h4>
+                <div>
+                    {% for i in r2.skills_matched %}<span class="pill-badge">✓ {{ i }}</span>{% endfor %}
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:30px;"><a href="/" style="color:#9ca3af; text-decoration:none; font-size:14px;">← Back to Engine Dashboard</a></div>
+    </div>
+</body>
+</html>
