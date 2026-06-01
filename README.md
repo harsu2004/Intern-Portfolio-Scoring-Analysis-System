@@ -4,58 +4,47 @@ The Intern Portfolio Readiness Scorer helps students and fresh graduates underst
 
 Users can upload their resume and optionally provide their GitHub username. The platform analyzes multiple aspects of their profile and generates a readiness score along with actionable suggestions.
 
-Key Objectives
-Evaluate internship readiness using Machine Learning
-Analyze resume quality and ATS compatibility
-Assess profile completeness
-Measure skill alignment with target roles
-Crawl and analyze GitHub repositories
+Key Objectives:-  
+Evaluate internship readiness using Machine Learning,
+Analyze resume quality and ATS compatibility,
+Assess profile completeness,
+Measure skill alignment with target roles,
+Crawl and analyze GitHub repositories,
 Provide personalized recommendations
 
-✨ Features
-Resume Analysis
-Resume parsing and information extraction
-ATS score evaluation
-Resume quality assessment
-Keyword matching
-Machine Learning Scoring
-Portfolio readiness prediction
-Feature-based candidate evaluation
-Hybrid scoring mechanism
-GitHub Analysis
-GitHub repository crawling
-Language detection
-Repository insights
-Portfolio strength evaluation
-Profile Evaluation
-Profile completeness analysis
-Skill match assessment
-Candidate summary generation
-Recommendations
-Personalized improvement suggestions
-Missing skill identification
-Resume enhancement guidance
+✨ Features:-  
+Resume Analysis, 
+Resume parsing and information extraction,
+ATS score evaluation,
+Keyword matching,
+Machine Learning Scoring,
+Portfolio readiness prediction,
+Feature-based candidate evaluation,
+Hybrid scoring mechanism,
+GitHub Analysis,
+GitHub repository crawling,
+Repository insights,
+Portfolio strength evaluation,
+Recommendations,
+Personalized improvement suggestions,
 
-Tech Stack
---Programming Language
+Tech Stack :- 
+--Programming Language - 
   Python
---Machine Learning
-  Scikit-Learn
-  XGBoost
-  NLP
-  TF-IDF
-  N-Grams
+--Machine Learning - 
+  Scikit-Learn,
+  XGBoost,
   Text Processing
---Backend
-  Flask
-  REST APIs
---Database
+--Backend - 
+  Flask,
+  REST APIs,
+--Database - 
   MongoDB
---Data Processing
-  Pandas
+--Data Processing - 
+  Pandas, 
   NumPy
---Version Control
-  Git
+--Version Control - 
+  Git,
   GitHub
 
 <img width="1183" height="489" alt="image" src="https://github.com/user-attachments/assets/a7c533b4-3eaa-4808-b7a1-039b517af75a" />
